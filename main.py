@@ -13,8 +13,8 @@ def read_queries():
 def write_responses(result):
     print('\n'.join(result))
 
-# Kad tiks ievadīta jauna kontaktpersona, tad tiks izsaukta šī metode, kura saglabās telefona
-# numuru un vārdu attiecīgos mainīgos, kas ir number un name.
+# Kad tiks ievadīta jauna kontaktpersona un tā nebūs atrasta jau dotajās kontaktpersonās, tad tiks izsaukta šī
+# metode, kura saglabās telefona numuru un vārdu attiecīgos mainīgos, kas ir number un name, tāpēc arī tiek piešķirts self
 class phone_book:
     def __init__(self, number, name):
         self.number = number
@@ -22,24 +22,24 @@ class phone_book:
 
 def process_queries(queries):
     result = []
-    # Keep list of all existing (i.e. not deleted yet) contacts.
     contacts = []
     for cur_query in queries:
         if cur_query.type == 'add':
-            # if we already have contact with such number,
-            # we should rewrite contact's name
-            # Izveido mainīgo atrasts, lai zinātu, vai tiek atrasta meklētā persona
+            # Izveidoju mainīgo atrasts, lai ietu caur kontaktu lsitu un pārbaudītu jau esošos kontaktus
+            # un uzzinātu, vai tiek atrasta meklētā persona.
             atrasts = False
             for contact in contacts:
                 if contact.number == cur_query.number:
                     contact.name = cur_query.name
+                    # Ja persona tiek atrasta, tad mainīgais atrasts nomainās uz true, un ciklst turpinās
                     atrasts = True
-                    # Ja persona nav atrasta, tad tā tiks pievienota kontaktos
+                    # Ja persona nav atrasta, tad tā tiks pievienota kontaktos caur phone_book metodi, kura tika izvediota
+                    # iepriekš
                     if not atrasts:
                         jauns_kontakts = phone_book(cur_query.number, cur_query.name)
                         contacts.append(jauns_kontakts)
                     break
-            else: # otherwise, just add it
+            else:
                 contacts.append(cur_query)
         elif cur_query.type == 'del':
             for j in range(len(contacts)):
