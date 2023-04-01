@@ -1,5 +1,4 @@
 # python3
-
 class Query:
     def __init__(self, query):
         self.type = query[0]
@@ -14,6 +13,13 @@ def read_queries():
 def write_responses(result):
     print('\n'.join(result))
 
+# Kad tiks ievadīta jauna kontaktpersona, tad tiks izsaukta šī metode, kura saglabās telefona
+# numuru un vārdu attiecīgos mainīgos, kas ir number un name.
+class phone_book:
+    def __init__(self, number, name):
+        self.number = number
+        self.name = name
+
 def process_queries(queries):
     result = []
     # Keep list of all existing (i.e. not deleted yet) contacts.
@@ -22,9 +28,16 @@ def process_queries(queries):
         if cur_query.type == 'add':
             # if we already have contact with such number,
             # we should rewrite contact's name
+            # Izveido mainīgo atrasts, lai zinātu, vai tiek atrasta meklētā persona
+            atrasts = False
             for contact in contacts:
                 if contact.number == cur_query.number:
                     contact.name = cur_query.name
+                    atrasts = True
+                    # Ja persona nav atrasta, tad tā tiks pievienota kontaktos
+                    if not atrasts:
+                        jauns_kontakts = phone_book(cur_query.number, cur_query.name)
+                        contacts.append(jauns_kontakts)
                     break
             else: # otherwise, just add it
                 contacts.append(cur_query)
@@ -44,4 +57,3 @@ def process_queries(queries):
 
 if __name__ == '__main__':
     write_responses(process_queries(read_queries()))
-
