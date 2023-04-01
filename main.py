@@ -36,7 +36,7 @@ def process_queries(queries):
                     # Ja persona nav atrasta, tad tā tiks pievienota kontaktos caur phone_book metodi, kura tika izvediota
                     # iepriekš
                     if not atrasts:
-                        jauns_kontakts = phone_book(cur_query.number, cur_query.name)
+                        jauns_kontakts = phone_book(cur_query.number cur_query.name)
                         contacts.append(jauns_kontakts)
                     break
             else:
