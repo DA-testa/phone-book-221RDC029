@@ -38,7 +38,7 @@ def process_queries(queries):
     kontaktu_grāmata = phone_book()
     for cur_query in queries:
         if cur_query.type == 'add':
-            kontaktu_grāmata.atrod(cur_query.number, cur_query.name)
+            kontaktu_grāmata.pievieno(cur_query.number, cur_query.name)
         elif cur_query.type == 'del':
             kontaktu_grāmata.izdzēst(cur_query.number)
         else:
