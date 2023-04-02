@@ -24,7 +24,7 @@ class phone_book:
         if number in self.contacts:
             return self.contacts[number]
         else:
-            return "person is not found"
+            return "not found"
 
     def izdzēst(self, number):
         if number in self.contacts:
